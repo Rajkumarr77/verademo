@@ -34,7 +34,7 @@ jobs:
         createsandbox: true
         canjobfail: true
         version: ${{ github.run_id }}
-        filepath: target/verademo.war
+        filepath: ./target/verademo.war
         sandboxname: Github-Sandbox
         deleteincompletescan: 2
         debug: true
