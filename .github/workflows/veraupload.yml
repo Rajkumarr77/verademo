@@ -24,7 +24,7 @@ jobs:
       run: pwd
       
     - name: Build with Maven
-      run: mvn package
+      run: mvn -B package --file /home/runner/work/verademo/verademo/app/pom.xml
       
     - name: Veracode Upload And Scan
       uses: veracode/veracode-uploadandscan-action@0.2.6
