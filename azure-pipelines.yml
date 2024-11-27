@@ -1,47 +1,49 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-# This is an example of using VeraDemo Java test application with the Veracode Static Pipeline scanner.  A Veracode subscription is required.
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
 - main
+
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Default
+
 steps:
-- task: Maven@3
-  displayName: Build with Maven
+# Starter pipeline
+- task: Bash@3
   inputs:
+    targetType: 'inline'
+    script: 'ls -lrt'
+- task: Maven@4
+  inputs:
+    mavenPomFile: '/app/pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Service Connection'
+    AnalysisService: 'Veracode'
+    veracodeAppProfile: 'RRRTEST'
+    version: 'TEST3'
+    filepath: 'app/target/verademo.war'
+    importResults: true
+    maximumWaitTime: '360'
+
 - task: Veracode Flaw Importer@3
   inputs:
-    ConnectionDetailsSelection: 'Credentials'
-    apiId: 'a78f8f006ab8608c3b6250e55b7b051f'
-    apiKey: '0bc7fda03726e57ce9b66dc59021bebc8c90afb130877c264e941ca4a0316baca00b46b21c87b95291494669b21d15f4d20abd145bd09d0d5ba975db8832fda2'
-    failBuildIfFlawImporterFails: true
-    veracodeAppProfile: 'RRRTEST'
+    ConnectionDetailsSelection: 'Service Connection'
+    veracodeAppProfile: '$(system.teamProject)'
     sandboxName: 
     scanType: 'Dynamic and Static Analysis'
-    importType: 'All Flaws'
-    workItemType: 'Issue'
+    importType: 'All Unmitigated Flaws Violating Policy'
+    workItemType: 'Bug'
     area: '$(system.teamProject)'
     overwriteAreaPathInWorkItemsOnImport: true
     iterationPath: '$(system.teamProject)'
     overwriteIterationPath: true
     flawImportLimit: '100'
-    mavenPomFile: 'app/pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-- task: Bash@3
-  displayName: Veracode Pipeline
-  inputs:
-    targetType: 'inline'
-    script: |
-      curl -sSO https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-      unzip -o pipeline-scan-LATEST.zip
-      java -jar pipeline-scan.jar -vid $(VERACODE_API_ID) -vkey $(VERACODE_API_KEY) -f /home/vsts/work/1/s/app/target/verademo.war || true
-- publish: $(System.DefaultWorkingDirectory)/results.json
-  artifact: VeracodeBaseline
