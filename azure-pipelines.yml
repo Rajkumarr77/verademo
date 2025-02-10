@@ -29,6 +29,7 @@ steps:
     optargs: '-deleteIncompleteScan 2'
     failBuildIfUploadAndScanBuildStepFails: true
     importResults: true
+    failBuildOnPolicyFail: true
     maximumWaitTime: '360'
 
 - task: Veracode Flaw Importer@3
