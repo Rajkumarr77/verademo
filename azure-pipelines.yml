@@ -19,18 +19,18 @@ steps:
 #     mavenAuthenticateFeed: false
 #     effectivePomSkip: false
 # #     sonarQubeRunAnalysis: false
-# - task: Veracode@3
-#   inputs:
-#     ConnectionDetailsSelection: 'Service Connection'
-#     AnalysisService: 'Veracode'
-#     veracodeAppProfile: 'TESTProfile'
-#     version: 'JANUARY1'
-#     filepath: 'app/target/verademo.war'
-#     optargs: '-deleteIncompleteScan 2'
-#     failBuildIfUploadAndScanBuildStepFails: true
-#     importResults: true
-#     failBuildOnPolicyFail: true
-#     maximumWaitTime: '360'
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Service Connection'
+    AnalysisService: 'Veracode'
+    veracodeAppProfile: 'TESTProfile'
+    version: 'JANUARY1'
+    filepath: 'app/target/verademo.war'
+    optargs: '-deleteIncompleteScan 2'
+    failBuildIfUploadAndScanBuildStepFails: true
+    importResults: true
+    failBuildOnPolicyFail: true
+    maximumWaitTime: '120'
 
 - task: Veracode Flaw Importer@3
   inputs:
