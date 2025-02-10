@@ -24,11 +24,11 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode'
     veracodeAppProfile: 'RRRTEST'
-    version: 'TEST5'
+    version: 'JANUARY'
     filepath: 'app/target/verademo.war'
+    optargs: '-deleteIncompleteScan 2'
     failBuildIfUploadAndScanBuildStepFails: true
     importResults: true
-    optargs: -deleteIncompleteScan 2
     maximumWaitTime: '360'
 
 - task: Veracode Flaw Importer@3
