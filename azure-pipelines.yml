@@ -24,7 +24,7 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode'
     veracodeAppProfile: 'TESTProfile'
-    version: 'JANUARY1'
+    version: '$(build.buildNumber)'
     filepath: 'app/target/verademo.war'
     optargs: '-deleteIncompleteScan 2'
     failBuildIfUploadAndScanBuildStepFails: true
@@ -38,10 +38,10 @@ steps:
     veracodeAppProfile: 'RRRTEST'
     sandboxName: 
     scanType: 'Static Analysis'
-    importType: 'All Unmitigated Flaws Violating Policy'
+    importType: 'All Flaws'
     workItemType: 'Bug'
     area: '$(system.teamProject)'
     overwriteAreaPathInWorkItemsOnImport: true
     iterationPath: '$(system.teamProject)'
     overwriteIterationPath: true
-    flawImportLimit: '100'
+    flawImportLimit: '10'
