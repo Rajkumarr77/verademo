@@ -45,4 +45,4 @@ steps:
     overwriteAreaPathInWorkItemsOnImport: true
     iterationPath: '$(system.teamProject)'
     overwriteIterationPath: true
-    flawImportLimit: '10'
+    flawImportLimit: '25'
