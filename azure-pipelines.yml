@@ -36,7 +36,7 @@ steps:
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode'
-    veracodeAppProfile: 'RRRTEST'
+    veracodeAppProfile: 'TESTjava'
     sandboxName: 
     scanType: 'Static Analysis'
     importType: 'All Flaws'
