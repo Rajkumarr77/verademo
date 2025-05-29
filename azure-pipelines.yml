@@ -1,6 +1,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 trigger:
-- master
+- main
 
 pool:
   name: Default
@@ -20,7 +20,7 @@ steps:
   inputs:
     ConnectionDetailsSelection: 'Service Connection'
     AnalysisService: 'Veracode'
-    veracodeAppProfile: 'TESTProfile'
+    veracodeAppProfile: 'RRRTEST'
     version: '$(build.buildNumber)'
     filepath: 'app/target/verademo.war'
     optargs: '-deleteIncompleteScan 2'
